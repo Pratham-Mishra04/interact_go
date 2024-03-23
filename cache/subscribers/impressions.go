@@ -13,7 +13,6 @@ import (
 
 var ctx = context.Background()
 
-// TODO1 check if this works
 func ImpressionsDumpSub(client *redis.Client, db *gorm.DB) { //TODO2 add logger here for errors
 	if client == nil {
 		fmt.Println("Error Subscribing to Redis Expiration Event for Impressions Dump: ", "redis client is nil")
@@ -45,7 +44,7 @@ func ImpressionsDumpSub(client *redis.Client, db *gorm.DB) { //TODO2 add logger 
 			modelID := extractModelDataFromKey(msg.Payload, 2)
 
 			if modelName == "" || modelID == "" {
-				return
+				continue
 			}
 
 			model := getModelFromStr(modelName)
@@ -73,15 +72,15 @@ func extractModelDataFromKey(key string, index int) string {
 
 func getModelFromStr(modelName string) interface{} {
 	switch modelName {
-	case "post":
+	case "Post":
 		return models.Post{}
-	case "project":
+	case "Project":
 		return models.Project{}
-	case "event":
+	case "Event":
 		return models.Event{}
-	case "opening":
+	case "Opening":
 		return models.Opening{}
-	case "user":
+	case "User":
 		return models.User{}
 	}
 
