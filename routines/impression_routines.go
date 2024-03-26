@@ -131,18 +131,10 @@ func checkForNotification(item interface{}, modelType interface{}, cacheImpressi
 	}
 }
 
-func getModelTypeStr(modelType interface{}) string {
-	switch modelType.(type) {
-	case *models.Post:
-		return "post"
-	case *models.Project:
-		return "project"
-	case *models.Event:
-		return "event"
-	case *models.Opening:
-		return "opening"
-	case *models.User:
-		return "user"
-	}
-	return ""
+func getModelTypeStr(item interface{}) string {
+    t := reflect.TypeOf(item)
+    if t.Kind() == reflect.Ptr {
+        t = t.Elem()
+    }
+    return t.Name()
 }

@@ -13,8 +13,7 @@ func RATE_LIMITER() fiber.Handler {
 		Expiration: 1 * time.Hour, // Duration for which the limit applies
 		KeyGenerator: func(c *fiber.Ctx) string {
 			// Use IP address to differentiate clients
-			//TODO3 IP is frontend IP and not user IP
-			return c.IP()
+			return string(c.Request().Header.Peek("Cf-Connecting-Ip"))
 		},
 		LimitReached: func(c *fiber.Ctx) error {
 			// What to do when the rate limit is reached

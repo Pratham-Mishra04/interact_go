@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Pratham-Mishra04/interact/cache/subscribers"
 	"github.com/Pratham-Mishra04/interact/config"
 	"github.com/Pratham-Mishra04/interact/helpers"
 	"github.com/Pratham-Mishra04/interact/initializers"
@@ -18,6 +19,7 @@ func init() {
 	initializers.ConnectToCache()
 	initializers.AutoMigrate()
 	helpers.InitializeBucketClients()
+	go subscribers.ImpressionsDumpSub(initializers.RedisClient, initializers.DB)
 
 	if initializers.CONFIG.POPULATE_DUMMIES {
 		populate.FillDummies()
@@ -38,7 +40,7 @@ func main() {
 
 	app.Use(helmet.New())
 	app.Use(config.CORS())
-	// app.Use(config.RATE_LIMITER())
+	app.Use(config.RATE_LIMITER())
 	// app.Use(config.API_CHECKER)
 
 	// if initializers.CONFIG.ENV == initializers.DevelopmentENV {

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Pratham-Mishra04/interact/cache/subscribers"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -29,6 +28,5 @@ func ConnectToCache() {
 	} else {
 		fmt.Println("Connected to redis!")
 
-		go subscribers.ImpressionsDumpSub(RedisClient, DB)
 	}
 }

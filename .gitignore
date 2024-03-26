@@ -7,3 +7,4 @@ interact.exe*
 .DS_Store
 bucket-key*.json
 a.out
+redis.conf
